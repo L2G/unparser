@@ -56,6 +56,14 @@ describe Unparser, 'spike' do
     end
   end
 
+  def self.assert_raises(ast, expected, versions = RUBIES)
+    with_versions(versions) do |version, parser|
+      it "should raise #{expected} when unparsing #{ast.inspect} under #{version}" do
+        expect { Unparser.unparse(ast) }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   def self.assert_round_trip(input, versions = RUBIES)
     with_versions(versions) do |version, parser|
       it "should round trip #{input.inspect} under #{version}" do
@@ -226,6 +234,8 @@ describe Unparser, 'spike' do
       assert_source '$a, $b = 1, 2'
       assert_source 'a, b = foo'
       assert_source 'a, (b, c) = 1, [2, 3]'
+      assert_raises s( :masgn, s(:mlhs, s(:lvasgn, :a), nil), s(:send, nil, :foo)),
+                      ArgumentError
     end
   end
 

@@ -114,6 +114,9 @@ module Unparser
     # @api private
     #
     def self.visit(node, buffer, parent = Root)
+      if node.nil?
+        raise ArgumentError, "Got nil for node -- corrupt syntax tree?"
+      end
       type = node.type
       emitter = REGISTRY.fetch(type) do
         raise ArgumentError, "No emitter for node: #{type.inspect}"
