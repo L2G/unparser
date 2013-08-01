@@ -92,5 +92,6 @@ require 'unparser/emitter/flipflop'
 require 'unparser/emitter/rescue'
 require 'unparser/emitter/resbody'
 require 'unparser/emitter/ensure'
+require 'unparser/exceptions'
 # make it easy for zombie
 require 'unparser/finalize'

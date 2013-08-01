@@ -235,7 +235,7 @@ describe Unparser, 'spike' do
       assert_source 'a, b = foo'
       assert_source 'a, (b, c) = 1, [2, 3]'
       assert_raises s( :masgn, s(:mlhs, s(:lvasgn, :a), nil), s(:send, nil, :foo)),
-                      ArgumentError
+                      Unparser::MalformedTreeError
     end
   end
 

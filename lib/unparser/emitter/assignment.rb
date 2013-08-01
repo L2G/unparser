@@ -132,7 +132,8 @@ module Unparser
         #
         def dispatch
           if parent.node.nil?
-            raise "Parent of :mlhs node is nil -- corrupt syntax tree?"
+            raise MalformedTreeError,
+              "Parent of :mlhs node is nil -- corrupt syntax tree?"
           elsif parent.node.type == :mlhs
             parentheses { delimited(children) }
           else
