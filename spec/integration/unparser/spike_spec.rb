@@ -59,7 +59,7 @@ describe Unparser, 'spike' do
   def self.assert_raises(ast, expected, versions = RUBIES)
     with_versions(versions) do |version, parser|
       it "should raise #{expected} when unparsing #{ast.inspect} under #{version}" do
-        expect { Unparser.unparse(ast) }.to raise_error(ArgumentError)
+        expect { Unparser.unparse(ast) }.to raise_error(expected)
       end
     end
   end
@@ -235,6 +235,8 @@ describe Unparser, 'spike' do
       assert_source 'a, b = foo'
       assert_source 'a, (b, c) = 1, [2, 3]'
       assert_raises s( :masgn, s(:mlhs, s(:lvasgn, :a), nil), s(:send, nil, :foo)),
+                      Unparser::MalformedTreeError
+      assert_raises s( :masgn, s(:mlhs, s(:lvasgn, :a), s(:lvasgn, :b)), s(:send, nil, :foo)),
                       Unparser::MalformedTreeError
     end
   end
